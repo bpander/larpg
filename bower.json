@@ -1,0 +1,10 @@
+{
+  "name": "larpg",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "requirejs": "2.1.9",
+    "jquery": "~2.1.0"
+  },
+  "devDependencies": {}
+}
