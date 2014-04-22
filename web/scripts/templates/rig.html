@@ -1,0 +1,44 @@
+<style>
+
+    bone {
+        position: absolute;
+        display: inline-block;
+        margin-top: -1px;
+        height: 2px;
+        background: #000000;
+    }
+
+    node {
+        position: absolute;
+        margin-left: -5px;
+        padding: 5px;
+        width: 0;
+        height: 0;
+        background: red;
+        border-radius: 50%;
+    }
+
+    bone node {
+        position: absolute;
+        left: 100%;
+        top: 50%;
+        margin-top: -5px;
+    }
+</style>
+
+<junction>
+    <node style="-webkit-transform: rotate(45deg)">
+        <bone style="width: 40px;">
+            <node style="-webkit-transform: rotate(45deg)">
+                <bone style="width: 50px;"></bone>
+            </node>
+        </bone>
+    </node>
+    <node style="-webkit-transform: rotate(-45deg)">
+        <bone style="width: 40px;">
+            <node style="-webkit-transform: rotate(45deg)">
+                <bone style="width: 50px;"></bone>
+            </node>
+        </bone>
+    </node>
+</junction>
