@@ -29,9 +29,21 @@ define(function (require) {
 
         var rig = new Rig();
         this.add(rig);
+
         rig.element.style.position = 'absolute';
-        rig.element.style.left = '40px';
-        rig.element.style.top = '40px';
+        rig.element.style.left = '140px';
+        rig.element.style.top = '140px';
+
+        rig.shadow.querySelector('#joint_shoulder_right').style.webkitTransform = 'rotate(40deg)';
+        rig.shadow.querySelector('#joint_elbow_right').style.webkitTransform = 'rotate(-40deg)';
+
+        rig.shadow.querySelector('#joint_shoulder_left').style.webkitTransform = 'rotate(-200deg)';
+        rig.shadow.querySelector('#joint_elbow_left').style.webkitTransform = 'rotate(-10deg)';
+
+        rig.shadow.querySelector('#joint_torso').style.webkitTransform = 'rotate(85deg)';
+        rig.shadow.querySelector('#joint_knee_right').style.webkitTransform = 'rotate(40deg)';
+
+        rig.attack();
 
         return this;
     };

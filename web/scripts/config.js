@@ -34,11 +34,13 @@
  */
 require.config({
     paths: {
-        'jquery':   'vendor/jquery/dist/jquery',
-        'text':     'vendor/requirejs-text/text'
+        'jquery':           'vendor/jquery/dist/jquery',
+        'jquery-transit':   'vendor/jquery.transit/jquery.transit',
+        'text':             'vendor/requirejs-text/text'
     },
 
     shim: {
+        'jquery-transit': { deps: ['jquery'] }
     },
 
     waitSeconds: 120

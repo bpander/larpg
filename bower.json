@@ -5,7 +5,8 @@
   "dependencies": {
     "requirejs": "2.1.9",
     "jquery": "~2.1.0",
-    "requirejs-text": "~2.0.12"
+    "requirejs-text": "~2.0.12",
+    "jquery.transit": "~0.9.9"
   },
   "devDependencies": {}
 }
