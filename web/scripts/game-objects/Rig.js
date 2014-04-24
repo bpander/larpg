@@ -46,7 +46,7 @@ define(function (require) {
             $joint_shoulder_right.transition({ rotate: 50 }, 200 * speed),
             $joint_elbow_right.transition({ rotate: -40 }, 200 * speed)
         ).then(function () {
-            self.pose();
+            return self.pose();
         });
     };
 
