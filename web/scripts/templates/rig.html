@@ -2,6 +2,7 @@
 
     :host {
         position: absolute;
+        transform: translateZ(0);
     }
 
     bone {
@@ -9,7 +10,7 @@
         display: inline-block;
         margin-top: -1px;
         height: 2px;
-        background: #000000;
+        background: transparent;
     }
 
     node {
@@ -19,7 +20,7 @@
         padding: 5px;
         width: 0;
         height: 0;
-        background: red;
+        background: transparent;
         border-radius: 50%;
     }
 
@@ -28,52 +29,96 @@
         left: 100%;
         top: 50%;
     }
+
+    skin {
+        display: block;
+        font-size: 0;
+    }
+
+    skin img {
+        position: absolute;
+        width: 100%;
+        height: auto;
+        transform: translateY(-50%);
+    }
 </style>
 
-<junction>
 
-    <node id="joint_neck" style="transform: rotate(-90deg)">
-        <bone style="width: 40px;"></bone>
-    </node>
+<node id="joint_neck" style="transform: rotate(-90deg); z-index: 1;">
+    <bone style="width: 40px;">
+        <skin style="transform: rotate(90deg);">
+            <img src="//placekitten.com/150/150" alt="" />
+        </skin>
+    </bone>
+</node>
 
-    <node id="joint_shoulder_right" style="transform: rotate(0deg)">
-        <bone style="width: 50px;">
-            <node id="joint_elbow_right" style="transform: rotate(0deg)">
-                <bone style="width: 50px;"></bone>
+<node id="joint_shoulder_right" style="transform: rotate(0deg);">
+    <bone style="width: 50px;">
+        <skin>
+            <img src="//placekitten.com/200/40" alt="" />
+        </skin>
+        <node id="joint_elbow_right" style="transform: rotate(0deg);">
+            <bone style="width: 50px;">
+                <skin>
+                    <img src="//placekitten.com/200/40" alt="" />
+                </skin>
+            </bone>
+        </node>
+    </bone>
+</node>
+
+<node id="joint_shoulder_left" style="transform: rotate(180deg);">
+    <bone style="width: 50px;">
+        <skin>
+            <img src="//placekitten.com/200/40" alt="" />
+        </skin>
+        <node id="joint_elbow_left" style="transform: rotate(0deg);">
+            <bone style="width: 50px;">
+                <skin>
+                    <img src="//placekitten.com/200/40" alt="" />
+                </skin>
+            </bone>
+        </node>
+    </bone>
+</node>
+
+<node id="joint_torso" style="transform: rotate(90deg);">
+    <bone style="width: 75px;">
+        <skin>
+            <img src="//placekitten.com/200/40" alt="" />
+        </skin>
+        <junction>
+
+            <node id="joint_hip_right" style="transform: rotate(-30deg);">
+                <bone style="width: 60px;">
+                    <skin>
+                        <img src="//placekitten.com/200/40" alt="" />
+                    </skin>
+                    <node id="joint_knee_right" style="transform: rotate(0deg);">
+                        <bone style="width: 60px;">
+                            <skin>
+                                <img src="//placekitten.com/200/40" alt="" />
+                            </skin>
+                        </bone>
+                    </node>
+                </bone>
             </node>
-        </bone>
-    </node>
 
-    <node id="joint_shoulder_left" style="transform: rotate(180deg)">
-        <bone style="width: 50px;">
-            <node id="joint_elbow_left" style="transform: rotate(0deg)">
-                <bone style="width: 50px;"></bone>
+            <node id="joint_hip_left" style="transform: rotate(30deg);">
+                <bone style="width: 60px;">
+                    <skin>
+                        <img src="//placekitten.com/200/40" alt="" />
+                    </skin>
+                    <node id="joint_knee_left" style="transform: rotate(0deg);">
+                        <bone style="width: 60px;">
+                            <skin>
+                                <img src="//placekitten.com/200/40" alt="" />
+                            </skin>
+                        </bone>
+                    </node>
+                </bone>
             </node>
-        </bone>
-    </node>
 
-    <node id="joint_torso" style="transform: rotate(90deg)">
-        <bone style="width: 75px;">
-            <junction>
-
-                <node id="joint_hip_right" style="transform: rotate(-30deg)">
-                    <bone style="width: 60px;">
-                        <node id="joint_knee_right" style="transform: rotate(0deg)">
-                            <bone style="width: 60px"></bone>
-                        </node>
-                    </bone>
-                </node>
-
-                <node id="joint_hip_left" style="transform: rotate(30deg)">
-                    <bone style="width: 60px;">
-                        <node id="joint_knee_left" style="transform: rotate(0deg)">
-                            <bone style="width: 60px"></bone>
-                        </node>
-                    </bone>
-                </node>
-
-            </junction>
-        </bone>
-    </node>
-
-</junction>
+        </junction>
+    </bone>
+</node>
