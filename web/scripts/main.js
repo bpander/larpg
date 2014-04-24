@@ -8,10 +8,12 @@ require(
     // syntax in any other modules.
     [
         'Game',
+        'game-objects/scenes/CharacterDebugScene',
         'jquery'
     ],
     function (
-        Game
+        Game,
+        CharacterDebugScene
     ) {
         'use strict';
 
@@ -19,7 +21,7 @@ require(
 
             // Start the game
             window.game = new Game();
-            window.game.start();
+            window.game.loadScene(new CharacterDebugScene());
 
         });
 
