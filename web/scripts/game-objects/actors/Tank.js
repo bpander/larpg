@@ -1,26 +1,24 @@
 define(function (require) {
     'use strict';
 
-    var GameObject = require('game-objects/GameObject');
-    var template = require('text!templates/rig.html');
     var $ = require('jquery');
+    var GameObject = require('game-objects/GameObject');
+    var template = require('text!templates/tank.html');
     require('jquery-transit');
 
 
-    function Rig () {
+    function Tank () {
         GameObject.call(this);
 
     }
-    Rig.prototype = new GameObject();
-    Rig.prototype.constructor = Rig;
+    Tank.prototype = new GameObject();
+    Tank.prototype.constructor = Tank;
+
+    Tank.prototype.tagName = 'tank';
+    Tank.prototype.template = template;
 
 
-    Rig.prototype.tagName = 'rig';
-
-    Rig.prototype.template = template;
-
-
-    Rig.prototype.pose = function (speed) {
+    Tank.prototype.pose = function (speed) {
         speed = typeof speed === 'number' ? speed : 1;
         $(this.shadow.querySelector('#joint_shoulder_right')).transition({ rotate: 40 }, 400 * speed);
         $(this.shadow.querySelector('#joint_elbow_right')).transition({ rotate: -40 }, 400 * speed);
@@ -35,7 +33,7 @@ define(function (require) {
     };
 
 
-    Rig.prototype.slash = function (speed) {
+    Tank.prototype.slash = function (speed) {
         speed = typeof speed === 'number' ? speed : 1;
         var self = this;
         var $joint_shoulder_right = $(this.shadow.querySelector('#joint_shoulder_right'));
@@ -51,7 +49,7 @@ define(function (require) {
     };
 
 
-    Rig.prototype.stab = function (speed) {
+    Tank.prototype.stab = function (speed) {
         speed = typeof speed === 'number' ? speed : 1;
         var self = this;
         var $joint_shoulder_right = $(this.shadow.querySelector('#joint_shoulder_right'));
@@ -67,5 +65,5 @@ define(function (require) {
     };
 
 
-    return Rig;
+    return Tank;
 });

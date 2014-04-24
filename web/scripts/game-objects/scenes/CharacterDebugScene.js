@@ -2,37 +2,45 @@ define(function (require) {
     'use strict';
 
     var Debug = require('game-objects/Debug');
-    var Rig = require('game-objects/Rig');
+    var Tank = require('game-objects/actors/Tank');
     var Scene = require('game-objects/scenes/Scene');
 
 
     function CharacterDebugScene () {
         Scene.call(this);
 
-        this.rig = null;
-
-        this.debug = null;
-
     }
     CharacterDebugScene.prototype = new Scene();
     CharacterDebugScene.prototype.constructor = CharacterDebugScene;
 
 
+    var CONFIG = {
+        characters: [{
+            constructor: Tank,
+            animations: [ 'slash', 'stab' ]
+        },
+        {
+            constructor: Tank,
+            animations: [ 'slash', 'stab' ]
+        }
+    ]};
+
+
     CharacterDebugScene.prototype.start = function () {
-        var self = this;
 
-        this.rig = new Rig();
-        this.add(this.rig);
-        this.rig.x(140).y(140).pose(0);
-
-        this.debug = new Debug();
-        this.add(this.debug);
-        this.debug.addButton('Slash', function () {
-            self.rig.slash();
-        });
-        this.debug.addButton('Stab', function () {
-            self.rig.stab();
-        });
+        CONFIG.characters.forEach(function (character, i) {
+            var instance = new (character.constructor)();
+            var debug = new Debug();
+            this.add(instance);
+            instance.add(debug);
+            instance.x(i * 200 + 140).y(140).pose(0);
+            debug.x(-40).y(200);
+            character.animations.forEach(function (animation) {
+                debug.addButton(animation, function () {
+                    instance[animation]();
+                });
+            });
+        }, this);
 
         return this;
     };

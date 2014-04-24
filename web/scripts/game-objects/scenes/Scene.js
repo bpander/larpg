@@ -12,7 +12,6 @@ define(function (require) {
     Scene.prototype = new GameObject();
     Scene.prototype.constructor = Scene;
 
-
     Scene.prototype.tagName = 'scene';
     Scene.prototype.template = template;
 
