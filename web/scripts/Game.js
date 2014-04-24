@@ -36,7 +36,7 @@ define(function (require) {
         this.rig = new Rig();
         this.scene.add(this.rig);
 
-        this.rig.x(140).y(140).pose();
+        this.rig.x(140).y(140).pose(0);
 
         return this;
     };

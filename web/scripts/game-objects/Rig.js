@@ -20,34 +20,50 @@ define(function (require) {
     Rig.prototype.template = template;
 
 
-    Rig.prototype.pose = function () {
-        this.shadow.querySelector('#joint_shoulder_right').style.webkitTransform = 'rotate(40deg)';
-        this.shadow.querySelector('#joint_elbow_right').style.webkitTransform = 'rotate(-40deg)';
+    Rig.prototype.pose = function (speed) {
+        speed = typeof speed === 'number' ? speed : 1;
+        $(this.shadow.querySelector('#joint_shoulder_right')).transition({ rotate: 40 }, 400 * speed);
+        $(this.shadow.querySelector('#joint_elbow_right')).transition({ rotate: -40 }, 400 * speed);
 
-        this.shadow.querySelector('#joint_shoulder_left').style.webkitTransform = 'rotate(-200deg)';
-        this.shadow.querySelector('#joint_elbow_left').style.webkitTransform = 'rotate(-10deg)';
+        $(this.shadow.querySelector('#joint_shoulder_left')).transition({ rotate: -200 }, 400 * speed);
+        $(this.shadow.querySelector('#joint_elbow_left')).transition({ rotate: -10 }, 400 * speed);
 
-        this.shadow.querySelector('#joint_torso').style.webkitTransform = 'rotate(85deg)';
-        this.shadow.querySelector('#joint_knee_right').style.webkitTransform = 'rotate(40deg)';
+        $(this.shadow.querySelector('#joint_torso')).transition({ rotate: 85 }, 400 * speed);
+        $(this.shadow.querySelector('#joint_knee_right')).transition({ rotate: 40 }, 400 * speed);
 
         return this;
     };
 
 
-    Rig.prototype.slash = function () {
+    Rig.prototype.slash = function (speed) {
+        speed = typeof speed === 'number' ? speed : 1;
+        var self = this;
         var $joint_shoulder_right = $(this.shadow.querySelector('#joint_shoulder_right'));
         var $joint_elbow_right = $(this.shadow.querySelector('#joint_elbow_right'));
         return $.when(
-            $joint_shoulder_right.transition({ rotate: -20 }, 400),
-            $joint_elbow_right.transition({ rotate: -80 }, 400),
-            $joint_shoulder_right.transition({ rotate: 40 }, 200),
-            $joint_elbow_right.transition({ rotate: -40 }, 200)
-        );
+            $joint_shoulder_right.transition({ rotate: -20 }, 400 * speed),
+            $joint_elbow_right.transition({ rotate: -80 }, 400 * speed),
+            $joint_shoulder_right.transition({ rotate: 50 }, 200 * speed),
+            $joint_elbow_right.transition({ rotate: -40 }, 200 * speed)
+        ).then(function () {
+            self.pose();
+        });
     };
 
 
-    Rig.prototype.stab = function () {
-
+    Rig.prototype.stab = function (speed) {
+        speed = typeof speed === 'number' ? speed : 1;
+        var self = this;
+        var $joint_shoulder_right = $(this.shadow.querySelector('#joint_shoulder_right'));
+        var $joint_elbow_right = $(this.shadow.querySelector('#joint_elbow_right'));
+        $.when(
+            $joint_shoulder_right.transition({ rotate: 100 }, 400 * speed),
+            $joint_elbow_right.transition({ rotate: -110 }, 400 * speed),
+            $joint_shoulder_right.transition({ rotate: 15 }, 200 * speed),
+            $joint_elbow_right.transition({ rotate: -10 }, 200 * speed)
+        ).then(function() {
+            return self.pose();
+        });
     };
 
 
