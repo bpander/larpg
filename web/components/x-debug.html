@@ -1,11 +1,40 @@
 <link rel="import" href="x-element.html" />
 
+<style>
+    body /deep/ x-debug-input {
+        cursor: default;
+        color: #eeeeee;
+        display: block;
+        font-size: 13px;
+        padding: 8px;
+        margin-top: 0;
+        border: 1px solid #bbbbbb;
+    }
+
+    body /deep/ x-debug-input + x-debug-input {
+        margin-top: 3px;
+    }
+
+    body /deep/ x-debug-input:hover {
+        background: #668;
+    }
+
+    body /deep/ x-debug-input:active {
+        background: #6a6;
+    }
+</style>
 
 <template>
+    <style>
+        :host {
+            background: #333355;
+            display: block;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            padding: 5px;
+        }
+    </style>
 
-    <p>test</p>
-        <content select="x-debug-input"></content>
-    <p>test2</p>
+    <content select="x-debug-input"></content>
 
 </template>
 

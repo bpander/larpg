@@ -3,14 +3,43 @@
 <link rel="import" href="../actors/x-tank.html" />
 <link rel="import" href="../x-debug.html" />
 
+
 <template>
-    <x-tank>
+    <style>
+        x-debug {
+            position: absolute;
+            left: 100px;
+        }
+        x-tank {
+            top: 100px;
+        }
+
+        #tank_first {
+            left: 200px;
+            top: 100px;
+        }
+
+        #tank_second {
+            left: 500px;
+            top: 100px;
+        }
+    </style>
+
+    <x-tank id="tank_first">
         <x-debug>
             <x-debug-input type="button" method="stab">Stab</x-debug-input>
             <x-debug-input type="button" method="slash">Slash</x-debug-input>
         </x-debug>
     </x-tank>
+    <x-tank id="tank_second">
+        <x-debug>
+            <x-debug-input type="button" method="stab">Stab</x-debug-input>
+            <x-debug-input type="button" method="slash">Slash</x-debug-input>
+        </x-debug>
+    </x-tank>
+
 </template>
+
 
 <script>
 (function () {
