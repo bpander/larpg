@@ -1,4 +1,5 @@
 <link rel="import" href="x-scene.html" />
+<link rel="import" href="../x-element.html" />
 <link rel="import" href="../actors/x-tank.html" />
 <link rel="import" href="../x-debug.html" />
 
@@ -15,16 +16,12 @@
 (function () {
     'use strict';
 
-    var templateBase = HTMLXSceneElement.prototype.template;
-    var templateExt = document.currentScript.ownerDocument.querySelector('template');
-    var templateMerged = templateBase.cloneNode(true);
-    templateMerged.content.appendChild(templateExt.content);
 
     window.HTMLXCharacterDebugScene = document.registerElement('x-character-debug-scene', {
         prototype: Object.create(HTMLXSceneElement.prototype, {
 
             template: {
-                value: templateMerged
+                value: HTMLXElement.mergeTemplates(HTMLXSceneElement.prototype.template.cloneNode(true), document.currentScript.ownerDocument.querySelector('template'))
             },
 
 

@@ -27,7 +27,7 @@
         return templates.reduce(function (previous, current) {
             previous.content.appendChild(current.content);
             return previous;
-        }, templates.shift().cloneNode(true));
+        }, templates.shift());
     };
 
 }())

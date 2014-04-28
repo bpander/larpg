@@ -97,7 +97,7 @@
         prototype: Object.create(HTMLXActorElement.prototype, {
 
             template: {
-                value: HTMLXElement.mergeTemplates(HTMLXActorElement.prototype.template, document.currentScript.ownerDocument.querySelector('template'))
+                value: HTMLXElement.mergeTemplates(HTMLXActorElement.prototype.template.cloneNode(true), document.currentScript.ownerDocument.querySelector('template'))
             },
 
 
