@@ -1,0 +1,34 @@
+<template></template>
+
+<script>
+(function () {
+
+    window.HTMLXElement = document.registerElement('x-element', {
+        prototype: Object.create(HTMLElement.prototype, {
+
+            template: {
+                value: document.currentScript.ownerDocument.querySelector('template')
+            },
+
+            createdCallback: {
+                value: function () {
+                    this.createShadowRoot();
+                    this.shadowRoot.appendChild(document.importNode(this.template.content, true));
+                }
+            }
+
+        })
+    });
+
+
+    window.HTMLXElement.mergeTemplates = function (templates) {
+        templates = templates instanceof Array ? templates : Array.prototype.slice.call(arguments, 0);
+
+        return templates.reduce(function (previous, current) {
+            previous.content.appendChild(current.content);
+            return previous;
+        }, templates.shift().cloneNode(true));
+    };
+
+}())
+</script>

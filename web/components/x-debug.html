@@ -1,0 +1,56 @@
+<link rel="import" href="x-element.html" />
+
+
+<template>
+
+    <p>test</p>
+        <content select="x-debug-input"></content>
+    <p>test2</p>
+
+</template>
+
+
+<script>
+(function () {
+    'use strict';
+
+    window.HTMLXDebugElement = document.registerElement('x-debug', {
+        prototype: Object.create(HTMLXElement.prototype, {
+
+            template: {
+                value: document.currentScript.ownerDocument.querySelector('template')
+            },
+
+
+            createdCallback: {
+                value: function () {
+                    HTMLXElement.prototype.createdCallback.call(this);
+                    this._onInputClick = this._onInputClick.bind(this);
+                    this.bindEvents();
+                }
+            },
+
+
+            bindEvents: {
+                value: function () {
+                    Array.prototype.forEach.call(this.querySelectorAll('x-debug-input'), function (element) {
+                        element.addEventListener('click', this._onInputClick);
+                    }, this);
+                }
+            },
+
+
+            _onInputClick: {
+                value: function (e) {
+                    var method = e.target.getAttribute('method');
+                    if (this.parentElement[method] instanceof Function) {
+                        this.parentElement[method]();
+                    }
+                },
+                writable: true
+            }
+
+        })
+    });
+}())
+</script>

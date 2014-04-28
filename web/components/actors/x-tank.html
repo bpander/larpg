@@ -1,0 +1,167 @@
+<link rel="import" href="../x-element.html" />
+<link rel="import" href="x-actor.html" />
+<script src="../../scripts/vendor/jquery/dist/jquery.min.js"></script>
+<script src="../../scripts/vendor/jquery.transit/jquery.transit.js"></script>
+
+
+<template>
+
+    <content select="x-debug"></content>
+
+    <node id="joint_neck" style="transform: rotate(-90deg); z-index: 1;">
+        <bone style="width: 40px;">
+            <skin style="transform: rotate(90deg);">
+                <img src="//placekitten.com/150/150" alt="" />
+            </skin>
+        </bone>
+    </node>
+
+    <node id="joint_shoulder_right" style="transform: rotate(0deg);">
+        <bone style="width: 50px;">
+            <skin>
+                <img src="//placekitten.com/200/40" alt="" />
+            </skin>
+            <node id="joint_elbow_right" style="transform: rotate(0deg);">
+                <bone style="width: 50px;">
+                    <skin>
+                        <img src="//placekitten.com/200/40" alt="" />
+                    </skin>
+                </bone>
+            </node>
+        </bone>
+    </node>
+
+    <node id="joint_shoulder_left" style="transform: rotate(180deg);">
+        <bone style="width: 50px;">
+            <skin>
+                <img src="//placekitten.com/200/40" alt="" />
+            </skin>
+            <node id="joint_elbow_left" style="transform: rotate(0deg);">
+                <bone style="width: 50px;">
+                    <skin>
+                        <img src="//placekitten.com/200/40" alt="" />
+                    </skin>
+                </bone>
+            </node>
+        </bone>
+    </node>
+
+    <node id="joint_torso" style="transform: rotate(90deg);">
+        <bone style="width: 75px;">
+            <skin>
+                <img src="//placekitten.com/200/40" alt="" />
+            </skin>
+            <junction>
+
+                <node id="joint_hip_right" style="transform: rotate(-30deg);">
+                    <bone style="width: 60px;">
+                        <skin>
+                            <img src="//placekitten.com/200/40" alt="" />
+                        </skin>
+                        <node id="joint_knee_right" style="transform: rotate(0deg);">
+                            <bone style="width: 60px;">
+                                <skin>
+                                    <img src="//placekitten.com/200/40" alt="" />
+                                </skin>
+                            </bone>
+                        </node>
+                    </bone>
+                </node>
+
+                <node id="joint_hip_left" style="transform: rotate(30deg);">
+                    <bone style="width: 60px;">
+                        <skin>
+                            <img src="//placekitten.com/200/40" alt="" />
+                        </skin>
+                        <node id="joint_knee_left" style="transform: rotate(0deg);">
+                            <bone style="width: 60px;">
+                                <skin>
+                                    <img src="//placekitten.com/200/40" alt="" />
+                                </skin>
+                            </bone>
+                        </node>
+                    </bone>
+                </node>
+
+            </junction>
+        </bone>
+    </node>
+</template>
+
+
+<script>
+(function () {
+    'use strict';
+
+    window.HTMLXTankElement = document.registerElement('x-tank', {
+        prototype: Object.create(HTMLXActorElement.prototype, {
+
+            template: {
+                value: HTMLXElement.mergeTemplates(HTMLXActorElement.prototype.template, document.currentScript.ownerDocument.querySelector('template'))
+            },
+
+
+            createdCallback: {
+                value: function () {
+                    HTMLXActorElement.prototype.createdCallback.call(this);
+                    this.pose(0);
+                }
+            },
+
+
+            pose: {
+                value: function (speed) {
+                    speed = typeof speed === 'number' ? speed : 1;
+                    $(this.shadowRoot.querySelector('#joint_shoulder_right')).transition({ rotate: 40 }, 400 * speed);
+                    $(this.shadowRoot.querySelector('#joint_elbow_right')).transition({ rotate: -40 }, 400 * speed);
+
+                    $(this.shadowRoot.querySelector('#joint_shoulder_left')).transition({ rotate: -200 }, 400 * speed);
+                    $(this.shadowRoot.querySelector('#joint_elbow_left')).transition({ rotate: -10 }, 400 * speed);
+
+                    $(this.shadowRoot.querySelector('#joint_torso')).transition({ rotate: 85 }, 400 * speed);
+                    $(this.shadowRoot.querySelector('#joint_knee_right')).transition({ rotate: 40 }, 400 * speed);
+
+                    return this;
+                }
+            },
+
+
+            slash: {
+                value: function (speed) {
+                    speed = typeof speed === 'number' ? speed : 1;
+                    var self = this;
+                    var $joint_shoulder_right = $(this.shadowRoot.querySelector('#joint_shoulder_right'));
+                    var $joint_elbow_right = $(this.shadowRoot.querySelector('#joint_elbow_right'));
+                    return $.when(
+                        $joint_shoulder_right.transition({ rotate: -20 }, 400 * speed),
+                        $joint_elbow_right.transition({ rotate: -80 }, 400 * speed),
+                        $joint_shoulder_right.transition({ rotate: 50 }, 200 * speed),
+                        $joint_elbow_right.transition({ rotate: -40 }, 200 * speed)
+                    ).then(function () {
+                        return self.pose();
+                    });
+                }
+            },
+
+
+            stab: {
+                value: function (speed) {
+                    speed = typeof speed === 'number' ? speed : 1;
+                    var self = this;
+                    var $joint_shoulder_right = $(this.shadowRoot.querySelector('#joint_shoulder_right'));
+                    var $joint_elbow_right = $(this.shadowRoot.querySelector('#joint_elbow_right'));
+                    $.when(
+                        $joint_shoulder_right.transition({ rotate: 100 }, 400 * speed),
+                        $joint_elbow_right.transition({ rotate: -110 }, 400 * speed),
+                        $joint_shoulder_right.transition({ rotate: 15 }, 200 * speed),
+                        $joint_elbow_right.transition({ rotate: -10 }, 200 * speed)
+                    ).then(function() {
+                        return self.pose();
+                    });
+                }
+            }
+
+        })
+    });
+}())
+</script>

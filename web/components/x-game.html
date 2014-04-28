@@ -1,0 +1,22 @@
+<link rel="import" href="x-element.html" />
+<link rel="import" href="scenes/x-character-debug-scene.html" />
+
+<template>
+    <x-character-debug-scene></x-character-debug-scene>
+</template>
+
+<script>
+(function () {
+    'use strict';
+
+    window.HTMLXGameElement = document.registerElement('x-game', {
+        prototype: Object.create(HTMLXElement.prototype, {
+
+            template: {
+                value: document.currentScript.ownerDocument.querySelector('template')
+            }
+
+        })
+    });
+}())
+</script>

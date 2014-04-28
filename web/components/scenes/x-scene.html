@@ -1,0 +1,30 @@
+<link rel="import" href="../x-element.html" />
+
+<template>
+    <style>
+
+        :host {
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+    </style>
+</template>
+
+<script>
+(function () {
+    'use strict';
+
+    window.HTMLXSceneElement = document.registerElement('x-scene', {
+        prototype: Object.create(HTMLXElement.prototype, {
+
+            template: {
+                value: document.currentScript.ownerDocument.querySelector('template')
+            }
+
+        })
+    });
+}())
+</script>

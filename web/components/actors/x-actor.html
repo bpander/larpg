@@ -1,0 +1,63 @@
+<link rel="import" href="../x-element.html" />
+
+
+<template>
+    <style>
+        :host {
+            position: absolute;
+            transform: translateZ(0);
+        }
+
+        bone {
+            position: absolute;
+            display: inline-block;
+            margin-top: -1px;
+            height: 2px;
+            background: transparent;
+        }
+
+        node {
+            position: absolute;
+            margin-left: -5px;
+            margin-top: -5px;
+            padding: 5px;
+            width: 0;
+            height: 0;
+            background: transparent;
+            border-radius: 50%;
+        }
+
+        bone node {
+            position: absolute;
+            left: 100%;
+            top: 50%;
+        }
+
+        skin {
+            display: block;
+            font-size: 0;
+        }
+
+        skin img {
+            position: absolute;
+            width: 100%;
+            height: auto;
+            transform: translateY(-50%);
+        }
+    </style>
+</template>
+
+
+<script>
+(function () {
+    window.HTMLXActorElement = document.registerElement('x-actor', {
+        prototype: Object.create(HTMLXElement.prototype, {
+
+            template: {
+                value: document.currentScript.ownerDocument.querySelector('template')
+            }
+
+        })
+    });
+}())
+</script>
