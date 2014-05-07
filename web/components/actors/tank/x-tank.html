@@ -1,0 +1,105 @@
+<link rel="import" href="../../x-element.html" />
+<link rel="import" href="../x-actor.html" />
+<script src="../../../scripts/vendor/jquery/dist/jquery.min.js"></script>
+<script src="../../../scripts/vendor/jquery.transit/jquery.transit.js"></script>
+
+
+<template>
+
+    <content select="x-debug"></content>
+
+    <node id="joint_head" style="transform: rotate(90deg);">
+        <bone style="width: 1225px;">
+            <skin>
+                <img src="components/actors/tank/images/tank-body.png" />
+            </skin>
+        </bone>
+    </node>
+
+    <node id="joint_arm" style="transform: rotate(90deg); top: 412px; left: -138px;">
+        <bone style="width: 594px;">
+            <skin>
+                <img src="components/actors/tank/images/tank-arm.png" />
+            </skin>
+        </bone>
+    </node>
+
+</template>
+
+
+<script>
+(function () {
+    'use strict';
+
+    window.HTMLXTankElement = document.registerElement('x-tank', {
+        prototype: Object.create(HTMLXActorElement.prototype, {
+
+            template: {
+                value: HTMLXElement.mergeTemplates(HTMLXActorElement.prototype.template.cloneNode(true), document.currentScript.ownerDocument.querySelector('template'))
+            },
+
+
+            createdCallback: {
+                value: function () {
+                    HTMLXActorElement.prototype.createdCallback.call(this);
+                    this.pose(0);
+                }
+            },
+
+
+            pose: {
+                value: function (speed) {
+                    speed = typeof speed === 'number' ? speed : 1;
+                    $(this.shadowRoot.querySelector('#joint_shoulder_right')).transition({ rotate: 40 }, 400 * speed);
+                    $(this.shadowRoot.querySelector('#joint_elbow_right')).transition({ rotate: -40 }, 400 * speed);
+
+                    $(this.shadowRoot.querySelector('#joint_shoulder_left')).transition({ rotate: -200 }, 400 * speed);
+                    $(this.shadowRoot.querySelector('#joint_elbow_left')).transition({ rotate: -10 }, 400 * speed);
+
+                    $(this.shadowRoot.querySelector('#joint_torso')).transition({ rotate: 85 }, 400 * speed);
+                    $(this.shadowRoot.querySelector('#joint_knee_right')).transition({ rotate: 40 }, 400 * speed);
+
+                    return this;
+                }
+            },
+
+
+            slash: {
+                value: function (speed) {
+                    speed = typeof speed === 'number' ? speed : 1;
+                    var self = this;
+                    var $joint_shoulder_right = $(this.shadowRoot.querySelector('#joint_shoulder_right'));
+                    var $joint_elbow_right = $(this.shadowRoot.querySelector('#joint_elbow_right'));
+                    return $.when(
+                        $joint_shoulder_right.transition({ rotate: -20 }, 400 * speed),
+                        $joint_elbow_right.transition({ rotate: -80 }, 400 * speed),
+                        $joint_shoulder_right.transition({ rotate: 50 }, 200 * speed),
+                        $joint_elbow_right.transition({ rotate: -40 }, 200 * speed)
+                    ).then(function () {
+                        return self.pose();
+                    });
+                }
+            },
+
+
+            stab: {
+                value: function (speed) {
+                    speed = typeof speed === 'number' ? speed : 1;
+                    var self = this;
+                    var $joint_shoulder_right = $(this.shadowRoot.querySelector('#joint_shoulder_right'));
+                    var $joint_elbow_right = $(this.shadowRoot.querySelector('#joint_elbow_right'));
+                    $.when(
+                        $joint_shoulder_right.transition({ rotate: 100 }, 400 * speed),
+                        $joint_elbow_right.transition({ rotate: -110 }, 400 * speed),
+                        $joint_shoulder_right.transition({ rotate: 15 }, 200 * speed),
+                        $joint_elbow_right.transition({ rotate: -10 }, 200 * speed)
+                    ).then(function() {
+                        return self.pose();
+                    });
+                }
+            }
+
+        })
+    });
+}())
+</script>
