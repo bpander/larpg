@@ -16,11 +16,18 @@
         </bone>
     </node>
 
-    <node id="joint_arm" style="transform: rotate(90deg); top: 412px; left: -138px;">
-        <bone style="width: 594px;">
-            <skin>
+    <node id="joint_arm" style="transform: rotate(90deg); top: 472px; left: -138px;">
+        <bone style="width: 594px; left: -60px;">
+            <skin style="z-index: 1;">
                 <img src="components/actors/tank/images/tank-arm.png" />
             </skin>
+            <node style="left: auto; right: 40px; transform: rotate(-50deg);">
+                <bone style="width: 608px; left: -110px;">
+                    <skin>
+                        <img src="components/actors/tank/images/tank-sword.png" />
+                    </skin>
+                </bone>
+            </node>
         </bone>
     </node>
 
