@@ -16,12 +16,12 @@
         </bone>
     </node>
 
-    <node id="joint_arm" style="transform: rotate(90deg); top: 472px; left: -138px;">
+    <node id="joint_shoulder" style="transform: rotate(90deg); top: 472px; left: -138px;">
         <bone style="width: 594px; left: -60px;">
             <skin style="z-index: 1;">
                 <img src="components/actors/tank/images/tank-arm.png" />
             </skin>
-            <node style="left: auto; right: 40px; transform: rotate(-50deg);">
+            <node id="joint_sword" style="left: auto; right: 40px; transform: rotate(-50deg);">
                 <bone style="width: 608px; left: -110px;">
                     <skin>
                         <img src="components/actors/tank/images/tank-sword.png" />
@@ -49,7 +49,6 @@
             createdCallback: {
                 value: function () {
                     HTMLXActorElement.prototype.createdCallback.call(this);
-                    this.pose(0);
                 }
             },
 
@@ -57,15 +56,8 @@
             pose: {
                 value: function (speed) {
                     speed = typeof speed === 'number' ? speed : 1;
-                    $(this.shadowRoot.querySelector('#joint_shoulder_right')).transition({ rotate: 40 }, 400 * speed);
-                    $(this.shadowRoot.querySelector('#joint_elbow_right')).transition({ rotate: -40 }, 400 * speed);
-
-                    $(this.shadowRoot.querySelector('#joint_shoulder_left')).transition({ rotate: -200 }, 400 * speed);
-                    $(this.shadowRoot.querySelector('#joint_elbow_left')).transition({ rotate: -10 }, 400 * speed);
-
-                    $(this.shadowRoot.querySelector('#joint_torso')).transition({ rotate: 85 }, 400 * speed);
-                    $(this.shadowRoot.querySelector('#joint_knee_right')).transition({ rotate: 40 }, 400 * speed);
-
+                    $(this.shadowRoot.querySelector('#joint_shoulder')).transition({ rotate: 90 }, 700 * speed);
+                    $(this.shadowRoot.querySelector('#joint_sword')).transition({ rotate: -50 }, 700 * speed);
                     return this;
                 }
             },
@@ -75,15 +67,18 @@
                 value: function (speed) {
                     speed = typeof speed === 'number' ? speed : 1;
                     var self = this;
-                    var $joint_shoulder_right = $(this.shadowRoot.querySelector('#joint_shoulder_right'));
-                    var $joint_elbow_right = $(this.shadowRoot.querySelector('#joint_elbow_right'));
-                    return $.when(
-                        $joint_shoulder_right.transition({ rotate: -20 }, 400 * speed),
-                        $joint_elbow_right.transition({ rotate: -80 }, 400 * speed),
-                        $joint_shoulder_right.transition({ rotate: 50 }, 200 * speed),
-                        $joint_elbow_right.transition({ rotate: -40 }, 200 * speed)
+                    var $joint_shoulder = $(this.shadowRoot.querySelector('#joint_shoulder'));
+                    var $joint_sword = $(this.shadowRoot.querySelector('#joint_sword'));
+                    $.when(
+                        $joint_shoulder.transition({ rotate: -85 }, 1000 * speed),
+                        $joint_shoulder.transition({ rotate: 60 }, 300 * speed),
+                        $joint_shoulder.transition({ rotate: 50 }, 400 * speed),
+                        $joint_sword.delay(400 * speed).transition({ rotate: -80 }, 700 * speed),
+                        $joint_sword.transition({ rotate: -30 }, 300 * speed),
+                        $joint_sword.transition({ rotate: -50 }, 300 * speed),
+                        $joint_sword.delay(100 * speed)
                     ).then(function () {
-                        return self.pose();
+                        self.pose(2);
                     });
                 }
             },
@@ -93,13 +88,16 @@
                 value: function (speed) {
                     speed = typeof speed === 'number' ? speed : 1;
                     var self = this;
-                    var $joint_shoulder_right = $(this.shadowRoot.querySelector('#joint_shoulder_right'));
-                    var $joint_elbow_right = $(this.shadowRoot.querySelector('#joint_elbow_right'));
+                    var $joint_shoulder = $(this.shadowRoot.querySelector('#joint_shoulder'));
+                    var $joint_sword = $(this.shadowRoot.querySelector('#joint_sword'));
                     $.when(
-                        $joint_shoulder_right.transition({ rotate: 100 }, 400 * speed),
-                        $joint_elbow_right.transition({ rotate: -110 }, 400 * speed),
-                        $joint_shoulder_right.transition({ rotate: 15 }, 200 * speed),
-                        $joint_elbow_right.transition({ rotate: -10 }, 200 * speed)
+                        $joint_shoulder.transition({ rotate: 130 }, 600 * speed),
+                        $joint_shoulder.transition({ rotate: 40 }, 300 * speed),
+                        $joint_shoulder.transition({ rotate: 50 }, 300 * speed),
+                        $joint_sword.transition({ rotate: -100 }, 600 * speed),
+                        $joint_sword.transition({ rotate: -40 }, 200 * speed),
+                        $joint_sword.transition({ rotate: -45 }, 200 * speed),
+                        $joint_sword.delay(400 * speed)
                     ).then(function() {
                         return self.pose();
                     });
