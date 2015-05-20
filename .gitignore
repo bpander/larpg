@@ -4,5 +4,4 @@
 .idea/*
 .tmp/
 node_modules/
-web/scripts/vendor/
 npm-debug.log
